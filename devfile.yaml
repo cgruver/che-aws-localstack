@@ -74,6 +74,7 @@ components:
 - volume:
     size: 4Gi
   name: projects
+commands:
 - apply:
     component: oc-cli
     label: Copy OpenShift CLI
