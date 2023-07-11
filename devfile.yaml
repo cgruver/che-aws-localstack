@@ -6,7 +6,7 @@ metadata:
 components:
 - name: dev-tools
   container: 
-    image: quay.io/cgruver0/che/che-demo-app:latest
+    image: quay.io/cgruver0/che/che-dev-image:latest
     mountSources: true
     sourceMapping: /projects
     env:
@@ -17,11 +17,9 @@ components:
     image: public.ecr.aws/localstack/localstack
     mountSources: true
     sourceMapping: /projects
-    args:
-      - '-f'
-      - /dev/null
-    command:
-      - tail
+    endpoints:
+    - name: localstack
+      targetPort: 4566
 # - name: localstack-deployment
 #   openshift:
 #     deployByDefault: true
@@ -47,23 +45,23 @@ components:
 #                   - name: http
 #                     containerPort: 4566
 #                     protocol: TCP
-- name: localstack-service
-  openshift:
-    deployByDefault: true
-    inlined: |
-      kind: Service
-      apiVersion: v1
-      metadata:
-        name: localstack
-      spec:
-        type: ClusterIP
-        ports:
-        - name: http-4566
-          port: 4566
-          protocol: TCP
-          targetPort: 4566
-      selector:
-        app: localstack
+# - name: localstack-service
+#   openshift:
+#     deployByDefault: true
+#     inlined: |
+#       kind: Service
+#       apiVersion: v1
+#       metadata:
+#         name: localstack
+#       spec:
+#         type: ClusterIP
+#         ports:
+#         - name: http-4566
+#           port: 4566
+#           protocol: TCP
+#           targetPort: 4566
+#       selector:
+#         app: localstack
 - name: oc-cli
   container:
     args:
