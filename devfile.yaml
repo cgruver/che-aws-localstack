@@ -16,6 +16,8 @@ components:
     env:
     - name: SHELL
       value: "/bin/zsh"
+    - name: VSCODE_DEFAULT_WORKSPACE
+      value: "/projects/che-aws-localstack/localstack.code-workspace"
 - name: aws-localstack
   container: 
     image: public.ecr.aws/localstack/localstack
