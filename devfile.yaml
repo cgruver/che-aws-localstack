@@ -7,6 +7,10 @@ components:
 - name: dev-tools
   container: 
     image: quay.io/cgruver0/che/che-dev-image:latest
+    memoryRequest: 1Gi
+    memoryLimit: 6Gi
+    cpuRequest: 500m
+    cpuLimit: 2000m
     mountSources: true
     sourceMapping: /projects
     env:
@@ -15,6 +19,10 @@ components:
 - name: aws-localstack
   container: 
     image: public.ecr.aws/localstack/localstack
+    memoryRequest: 1Gi
+    memoryLimit: 6Gi
+    cpuRequest: 500m
+    cpuLimit: 2000m
     mountSources: true
     sourceMapping: /projects
     endpoints:
