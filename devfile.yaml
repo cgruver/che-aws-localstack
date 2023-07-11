@@ -17,6 +17,11 @@ components:
     image: public.ecr.aws/localstack/localstack
     mountSources: true
     sourceMapping: /projects
+    args:
+      - '-f'
+      - /dev/null
+    command:
+      - tail
 # - name: localstack-deployment
 #   openshift:
 #     deployByDefault: true
@@ -24,16 +29,16 @@ components:
 #       kind: Deployment
 #       apiVersion: apps/v1
 #       metadata:
-#         name: localstack-app
+#         name: localstack
 #       spec:
 #         replicas: 1
 #         selector:
 #           matchLabels:
-#             app: localstack-app
+#             app: localstack
 #         template:
 #           metadata:
 #             labels:
-#               app: localstack-app
+#               app: localstack
 #           spec:
 #             containers:
 #               - name: localstack
@@ -49,7 +54,7 @@ components:
       kind: Service
       apiVersion: v1
       metadata:
-        name: localstack-app
+        name: localstack
       spec:
         type: ClusterIP
         ports:
@@ -58,7 +63,7 @@ components:
           protocol: TCP
           targetPort: 4566
       selector:
-        app: localstack-app
+        app: localstack
 - name: oc-cli
   container:
     args:
