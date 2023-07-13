@@ -3,6 +3,14 @@ metadata:
   name: localstack
   projectType: LocalStack
   displayName: LocalStack
+projects:
+- name: localstack-demo
+  git:
+    checkoutFrom:
+      remote: origin
+      revision: main
+    remotes:
+      origin: https://github.com/localstack/localstack-demo.git
 components:
 - name: dev-tools
   container: 
@@ -27,6 +35,13 @@ components:
     cpuLimit: 2000m
     mountSources: true
     sourceMapping: /projects
+    env:
+    - name: TESTCONTAINERS_RYUK_DISABLED
+      value: "true"
+    - name: TESTCONTAINERS_CHECKS_DISABLE
+      value: "true"
+    - name: DOCKER_HOST
+      value: "tcp://127.0.0.1:2475"
     endpoints:
     - name: localstack
       targetPort: 4566
@@ -47,6 +62,14 @@ components:
     size: 4Gi
   name: projects
 commands:
+- exec:
+    commandLine: "kubedock server --port-forward"
+    component: dev-tools
+    group:
+      kind: run
+    label: Kubedock
+    workingDir: '/'
+  id: kubedock
 - apply:
     component: oc-cli
     label: Copy OpenShift CLI
