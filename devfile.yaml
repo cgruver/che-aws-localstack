@@ -4,6 +4,13 @@ metadata:
   projectType: LocalStack
   displayName: LocalStack
 projects:
+- name: che-aws-localstack
+  git:
+    checkoutFrom:
+      remote: origin
+      revision: main
+    remotes:
+      origin: https://github.com/cgruver/che-aws-localstack.git
 - name: localstack-demo
   git:
     checkoutFrom:
