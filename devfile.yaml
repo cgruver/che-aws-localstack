@@ -57,7 +57,7 @@ components:
       targetPort: 4566
     volumeMounts:
       - name: state
-        path: /var/lib/localstack/tmp/state
+        path: /var/lib/localstack
 - name: oc-cli
   container:
     args:
