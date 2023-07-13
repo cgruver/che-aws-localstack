@@ -52,6 +52,9 @@ components:
     endpoints:
     - name: localstack
       targetPort: 4566
+    volumeMounts:
+      - name: state
+        path: /var/lib/localstack/tmp/state
 - name: oc-cli
   container:
     args:
@@ -68,6 +71,9 @@ components:
 - volume:
     size: 4Gi
   name: projects
+- volume:
+    size: 2Gi
+  name: state
 commands:
 - exec:
     commandLine: "kubedock server --port-forward"
