@@ -33,6 +33,9 @@ components:
       value: "/bin/zsh"
     - name: VSCODE_DEFAULT_WORKSPACE
       value: "/projects/che-aws-localstack/localstack.code-workspace"
+    endpoints:
+    - name: kubedock
+      targetPort: 2475
 - name: aws-localstack
   container: 
     image: public.ecr.aws/localstack/localstack
