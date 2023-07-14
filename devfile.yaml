@@ -46,8 +46,8 @@ components:
     mountSources: true
     sourceMapping: /projects
     env:
-    - name: DOCKER_SOCK
-      value: "/projects/docker.sock"
+    - name: LAMBDA_RUNTIME_EXECUTOR
+      value: "kubernetes"
     endpoints:
     - name: localstack
       targetPort: 4566
