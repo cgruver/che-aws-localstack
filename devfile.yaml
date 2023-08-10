@@ -20,8 +20,10 @@ projects:
       origin: https://github.com/localstack/localstack-demo.git
 components:
 - name: dev-tools
+  attributes:
+    pod-overrides: {"metadata": {"annotations": {"io.kubernetes.cri-o.Devices":"/dev/fuse","io.openshift.podman-fuse":""}}}
   container: 
-    image: quay.io/cgruver0/che/che-dev-image:latest
+    image: quay.io/cgruver0/che/che-dev-image:init
     memoryRequest: 1Gi
     memoryLimit: 6Gi
     cpuRequest: 500m
@@ -33,27 +35,6 @@ components:
       value: "/bin/zsh"
     - name: VSCODE_DEFAULT_WORKSPACE
       value: "/projects/che-aws-localstack/localstack.code-workspace"
-    endpoints:
-    - name: kubedock
-      targetPort: 2475
-- name: aws-localstack
-  container: 
-    image: public.ecr.aws/localstack/localstack
-    memoryRequest: 1Gi
-    memoryLimit: 6Gi
-    cpuRequest: 500m
-    cpuLimit: 2000m
-    mountSources: true
-    sourceMapping: /projects
-    env:
-    - name: LAMBDA_RUNTIME_EXECUTOR
-      value: "kubernetes"
-    endpoints:
-    - name: localstack
-      targetPort: 4566
-    volumeMounts:
-      - name: state
-        path: /var/lib/localstack
 - name: oc-cli
   container:
     args:
@@ -74,14 +55,6 @@ components:
     size: 2Gi
   name: state
 commands:
-- exec:
-    commandLine: "kubedock server --unix-socket /projects/docker.sock --port-forward"
-    component: dev-tools
-    group:
-      kind: run
-    label: Kubedock
-    workingDir: '/'
-  id: kubedock
 - apply:
     component: oc-cli
     label: Copy OpenShift CLI
