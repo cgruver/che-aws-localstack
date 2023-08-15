@@ -21,7 +21,7 @@ projects:
 components:
 - name: dev-tools
   attributes:
-    pod-overrides: {"metadata": {"annotations": {"io.kubernetes.cri-o.Devices":"/dev/fuse","io.openshift.podman-fuse":""}}}
+    pod-overrides: {"metadata": {"annotations": {"io.kubernetes.cri-o.Devices":"/dev/fuse,/dev/net/tun","io.openshift.podman-fuse":""}}}
   container: 
     image: quay.io/cgruver0/che/che-dev-image:fuse
     memoryRequest: 1Gi
@@ -35,25 +35,8 @@ components:
       value: "/bin/zsh"
     - name: VSCODE_DEFAULT_WORKSPACE
       value: "/projects/che-aws-localstack/localstack.code-workspace"
-- name: localstack
-  attributes:
-    pod-overrides: {"metadata": {"annotations": {"io.kubernetes.cri-o.Devices":"/dev/fuse","io.openshift.podman-fuse":""}}}
-  container: 
-    image: quay.io/cgruver0/che/che-dev-image:init
-    memoryRequest: 1Gi
-    memoryLimit: 6Gi
-    cpuRequest: 500m
-    cpuLimit: 2000m
-    mountSources: true
-    sourceMapping: /projects
-    args:
-      - '-f'
-      - /dev/null
-    command:
-      - tail
-    env:
-    - name: SHELL
-      value: "/bin/zsh"
+    - name: DOCKER_HOST
+      value: "unix:///tmp/podman.sock"
 - name: oc-cli
   container:
     args:
